@@ -121,3 +121,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'custom_user.MyUser'
+
+LOGIN_URL = '/login/'

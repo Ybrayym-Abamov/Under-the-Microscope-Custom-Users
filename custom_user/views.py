@@ -14,9 +14,9 @@ from adastra.settings import AUTH_USER_MODEL
 @login_required  # to view the main page, visitors must be logged in
 def main(request):
     # retrieving all of the data from the model I created
-    data = MyUser.objects.first()
+    data = MyUser.objects.all()
     # and rendering all of it in the main page
-    return render(request, 'main.html', {'data': data})
+    return render(request, 'main.html', {'data': data, 'authuser': AUTH_USER_MODEL})
 
 
 def signup_view(request):
@@ -27,7 +27,9 @@ def signup_view(request):
             user = MyUser.objects.create_user(
                 username=data['username'],
                 displayname=data['displayname'],
-                password=data['password']
+                password=data['password'],
+                fieldname=data['fieldname'],
+                age=data['age']
             )
             if user:
                 login(request, user)
@@ -35,7 +37,7 @@ def signup_view(request):
         return HttpResponseRedirect(reverse('homepage'))
 
     form = SignUpForm()
-    return render(request, 'main.html', {"form": form})
+    return render(request, 'signupform.html', {"form": form})
 
 
 def login_view(request):
